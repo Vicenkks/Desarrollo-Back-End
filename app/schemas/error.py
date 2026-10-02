@@ -5,15 +5,11 @@ class ErrorDetail(BaseModel):
     field: Optional[str] = None
     message: str
 
-class ErrorResponse(BaseModel):
-    error: dict
+class ErrorData(BaseModel):
+    code: str
+    message: str
+    details: list[ErrorDetail] = []
 
-    @classmethod
-    def create(cls, code: str, message: str, details: List[dict] = None):
-        return cls(
-            error={
-                "code": code,
-                "message": message,
-                "details": details or []
-            }
-        )
+
+class ErrorResponse(BaseModel):
+    error: ErrorData
